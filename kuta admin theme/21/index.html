@@ -548,8 +548,8 @@
 
 				<!-- ** left panel ** -->
 				<div id="leftpanel">
-					<div class="leftpanel-wrapper">
-						<ul class="nav nav-pills nav-stacked">
+					<div class="leftpanel-wrapper" id="menu">
+						<ul class="nav nav-pills nav-stacked" >
 							<li class="user-container">
 								<a href="#">
 									<img src="images/100/07.png" />
@@ -561,24 +561,73 @@
 									<i class="icon-large icon-home"></i>
 									Dashboard
 								</a>
-							</li>
+								
+
 							<li>
 								<a href="sample-layouts.html">
 									<i class="icon-large icon-file"></i>
-									Sample Layouts
+									Catalog
 								</a>
+								 <ul class="nav nav-pills nav-stacked">
+								  <li><a href="http://localhost/fancycart/admin/index.php?route=catalog/category&amp;token=2d87ea4c5f570763cebfdd3ab6b3cdc5">Categories</a></li>
+								  <li><a href="http://localhost/fancycart/admin/index.php?route=catalog/product&amp;token=2d87ea4c5f570763cebfdd3ab6b3cdc5">Products</a></li>
+								  <li><a class="parent">Attributes</a>
+									<ul class="nav nav-pills nav-stacked" style="padding-left:10px;">
+									  <li><a href="http://localhost/fancycart/admin/index.php?route=catalog/attribute&amp;token=2d87ea4c5f570763cebfdd3ab6b3cdc5">Attributes</a></li>
+									  <li><a href="http://localhost/fancycart/admin/index.php?route=catalog/attribute_group&amp;token=2d87ea4c5f570763cebfdd3ab6b3cdc5">Attribute Groups</a></li>
+									</ul>
+								  </li>
+								  <li><a href="http://localhost/fancycart/admin/index.php?route=catalog/option&amp;token=2d87ea4c5f570763cebfdd3ab6b3cdc5">Options</a></li>
+								  <li><a href="http://localhost/fancycart/admin/index.php?route=catalog/manufacturer&amp;token=2d87ea4c5f570763cebfdd3ab6b3cdc5">Manufacturers</a></li>
+								  <li><a href="http://localhost/fancycart/admin/index.php?route=catalog/download&amp;token=2d87ea4c5f570763cebfdd3ab6b3cdc5">Downloads</a></li>
+								  <li><a href="http://localhost/fancycart/admin/index.php?route=catalog/review&amp;token=2d87ea4c5f570763cebfdd3ab6b3cdc5">Reviews</a></li>
+								  <li><a href="http://localhost/fancycart/admin/index.php?route=catalog/information&amp;token=2d87ea4c5f570763cebfdd3ab6b3cdc5">Information</a></li>
+							</li>
+							</ul>
+         
+      
 							</li>
 							<li>
 								<a href="user-interface.html">
 									<i class="icon-large icon-random"></i>
-									User Interface
+									Extensions
 								</a>
+								 <ul class="nav nav-pills nav-stacked ">
+								  <li><a href="http://localhost/fancycart/admin/index.php?route=extension/module&amp;token=2d87ea4c5f570763cebfdd3ab6b3cdc5">Modules</a></li>
+								  <li><a href="http://localhost/fancycart/admin/index.php?route=extension/shipping&amp;token=2d87ea4c5f570763cebfdd3ab6b3cdc5">Shipping</a></li>
+								  <li><a href="http://localhost/fancycart/admin/index.php?route=extension/payment&amp;token=2d87ea4c5f570763cebfdd3ab6b3cdc5">Payments</a></li>
+								  <li><a href="http://localhost/fancycart/admin/index.php?route=extension/total&amp;token=2d87ea4c5f570763cebfdd3ab6b3cdc5">Order Totals</a></li>
+								  <li><a href="http://localhost/fancycart/admin/index.php?route=extension/feed&amp;token=2d87ea4c5f570763cebfdd3ab6b3cdc5">Product Feeds</a></li>
+								  <li><a href="http://localhost/fancycart/admin/index.php?route=module/vqmod_manager&amp;token=2d87ea4c5f570763cebfdd3ab6b3cdc5">VQMod Manager</a></li>
+								</ul>
+
 							</li>
 							<li>
 								<a href="charts-maps.html">
 									<i class="icon-large icon-bar-chart"></i>
-									Charts & Maps
+									Sales
 								</a>
+								 <ul class="nav nav-pills nav-stacked ">
+          <li><a href="http://localhost/fancycart/admin/index.php?route=sale/order&amp;token=2d87ea4c5f570763cebfdd3ab6b3cdc5">Orders</a></li>
+          <li><a href="http://localhost/fancycart/admin/index.php?route=sale/return&amp;token=2d87ea4c5f570763cebfdd3ab6b3cdc5">Returns</a></li>
+          <li><a class="parent">Customers</a>
+            <ul class="nav nav-pills nav-stacked " style="padding-left:10px;">
+              <li><a href="http://localhost/fancycart/admin/index.php?route=sale/customer&amp;token=2d87ea4c5f570763cebfdd3ab6b3cdc5">Customers</a></li>
+              <li><a href="http://localhost/fancycart/admin/index.php?route=sale/customer_group&amp;token=2d87ea4c5f570763cebfdd3ab6b3cdc5">Customer Groups</a></li>
+              <li><a href="http://localhost/fancycart/admin/index.php?route=sale/customer_blacklist&amp;token=2d87ea4c5f570763cebfdd3ab6b3cdc5">IP Blacklist</a></li>
+            </ul>
+          </li>
+          <li><a href="http://localhost/fancycart/admin/index.php?route=sale/affiliate&amp;token=2d87ea4c5f570763cebfdd3ab6b3cdc5">Affiliates</a></li>
+          <li><a href="http://localhost/fancycart/admin/index.php?route=sale/coupon&amp;token=2d87ea4c5f570763cebfdd3ab6b3cdc5">Coupons</a></li>
+          <li><a class="parent">Gift Vouchers</a>
+            <ul class="nav nav-pills nav-stacked " style="padding-left:10px;">
+              <li><a href="http://localhost/fancycart/admin/index.php?route=sale/voucher&amp;token=2d87ea4c5f570763cebfdd3ab6b3cdc5">Gift Vouchers</a></li>
+              <li><a href="http://localhost/fancycart/admin/index.php?route=sale/voucher_theme&amp;token=2d87ea4c5f570763cebfdd3ab6b3cdc5">Voucher Themes</a></li>
+            </ul>
+          </li>
+          <li><a href="http://localhost/fancycart/admin/index.php?route=sale/contact&amp;token=2d87ea4c5f570763cebfdd3ab6b3cdc5">Mail</a></li>
+        </ul>
+
 							</li>
 							<li>
 								<a href="form-elements.html">
@@ -637,5 +686,27 @@
 		<script src="js/chart-pie-donut.js"></script>
 		<script src="js/map-marker-clusterer.js"></script>
 
+		<script src="js/superfish.js"></script>
+		
+		<script>
+		$(document).ready(function() {
+	$('#menu > ul').superfish({
+		hoverClass	 : 'sfHover',
+		delay		 : 100,
+		animation	 : {height: 'show'},
+		speed		 : 'normal',
+		autoArrows   : false,
+		dropShadows  : false, 
+		disableHI	 : false, /* set to true to disable hoverIntent detection */
+		onInit		 : function(){},
+		onBeforeShow : function(){},
+		onShow		 : function(){},
+		onHide		 : function(){}
+	});
+	
+	$('#menu > ul').css('display', 'block');
+});
+ 
+</script>
 	</body>
 </html>
