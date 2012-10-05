@@ -1,0 +1,161 @@
+<modification>
+  <id>Avgrund Jquery Plugin Integration for Maintenence Modal Message with transitions</id>
+  <version>1.0</version>
+  <vqmver>1.0.8</vqmver>
+  <author>One Step Solutions Pty Ltd. Based upon the Jquery Plugin created by voronianski http://labs.voronianski.com/jquery.avgrund.js</author>
+    	<file name="catalog/view/theme/default/template/common/maintenance.tpl">
+		<operation error="skip">
+			<search position="replace"><![CDATA[
+                if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/maintenance.tpl')) {	
+                <?php echo $message; ?>}]]></search>
+			<add><![CDATA[
+              
+                <?php echo $column_left; ?>
+                <?php echo $column_right; ?>
+                <div id="content">
+                    <?php echo $content_top; ?>
+                <h1 style="display: none;">
+                    <?php echo $heading_title; ?>
+                </h1>
+                <?php echo $content_bottom; ?>
+                </div>
+
+                <!-- 
+                Links to required files.
+                                  
+                     avgrund.css contains styles for the dialog, style.css contains some basic styles for the page, and of course the jquery.avgrund.js contains the javascript code.
+                     There have been some slight modifications made to the code in the plugin to ensure that the dialog cannot be closed. 
+                     Line 57 in the js file has been commented to ensure that the dialog will not close on keypress.
+                
+                 -->
+                <link rel="stylesheet" href="catalog/view/javascript/jquery/avgrund/style/avgrund.css"> 
+                <link rel="stylesheet" href="catalog/view/javascript/jquery/avgrund/style/style.css">
+                <script type="text/javascript" src="catalog/view/javascript/jquery/avgrund/js/jquery.avgrund.js"></script>
+                  <?php echo "--------------"; ?>
+                <script>
+              $(document).ready(function() {
+                     $('body').avgrund({            // link to the body tag
+			            height: 200,                // height of the dialog
+                        width:500,                  // width of the dialog
+			            holderClass: 'custom',      // Custom styles for popin & close button, defined in style.css
+			            showClose: false,           // whether to show a close button.
+	                    showCloseText: '',          // the text of the close button
+	                    closeByEscape: false,       // do we allow the dialog to be closed by pressing the ESC key. Note this has been removed from the code. See comment above
+	                    closeByDocument: false,     // do we allow a click on the document to close this dialog
+			            enableStackAnimation: true, // do we allow a stack animation to play
+			            template: '<p align="center"><img src="http://localhost/fancycart/image/data/logo.png" /><BR /></p><p text-align="center"><strong>We are currently performing maintenence on the site.<BR />We will be back soon!!</strong></p>' // the HTML that will be shown as the dialog content
+		                });
+                     $('body').click();             // mimic a click on the body, so the dialog will show.
+                    });
+                </script>
+                ]]></add>
+		</operation>
+	</file>
+    <!-- Admin additions. The following adds some new options to the Administration-Server Screen under Maintenence Yes/No option.
+         This allows you to define the HTML that is displayed in the modal dialog, and also allows you to modify the height and width of the displayed dialog.    
+    -->
+    <file name="catalog/view/theme/default/template/common/maintenance.tpl">
+		<operation error="skip">
+			<search position="replace"><![CDATA[<?php echo $message; ?>]]></search>
+			<add><![CDATA[
+                <?php echo $column_left; ?>
+                <?php echo $column_right; ?>
+                <div id="content">
+                    <?php echo $content_top; ?>
+                <h1 style="display: none;">
+                    <?php echo $heading_title; ?>
+                </h1>
+                <?php echo $content_bottom; ?>
+                </div>
+                <!-- 
+                Links to required files.
+                                  
+                     avgrund.css contains styles for the dialog, style.css contains some basic styles for the page, and of course the jquery.avgrund.js contains the javascript code.
+                     There have been some slight modifications made to the code in the plugin to ensure that the dialog cannot be closed. 
+                     Line 57 in the js file has been commented to ensure that the dialog will not close on keypress.
+               
+                 -->
+                <link rel="stylesheet" href="catalog/view/javascript/jquery/avgrund/style/avgrund.css"> 
+                <link rel="stylesheet" href="catalog/view/javascript/jquery/avgrund/style/style.css">
+                <script type="text/javascript" src="catalog/view/javascript/jquery/avgrund/js/jquery.avgrund.js"></script>
+                <script>
+              $(document).ready(function() {
+                     $('body').avgrund({            // link to the body tag
+			            height: 200,                // height of the dialog
+                        width:500,                  // width of the dialog
+			            holderClass: 'custom',      // Custom styles for popin & close button, defined in style.css
+			            showClose: false,           // whether to show a close button.
+	                    showCloseText: '',          // the text of the close button
+	                    closeByEscape: false,       // do we allow the dialog to be closed by pressing the ESC key. Note this has been removed from the code. See comment above
+	                    closeByDocument: false,     // do we allow a click on the document to close this dialog
+			            enableStackAnimation: true, // do we allow a stack animation to play
+			            template: '<p align="center"><img src="http://localhost/fancycart/image/data/logo.png" /><BR /></p><p text-align="center"><strong>We are currently performing maintenence on the site.<BR />We will be back soon!!</strong></p>' // the HTML that will be shown as the dialog content
+		                });
+                     $('body').click();             // mimic a click on the body, so the dialog will show.
+                    });
+                </script>
+                ]]></add>
+		</operation>
+	</file>
+
+
+
+     <!-- 
+          CSS modifications.
+        
+          The background that is displayed when the modal is shown is defined in the following class at the top of the avgrund.css file.
+          The background URL property below defines the image that will be rendered. You can replace this by simply overwriting the dark_dotted.png file 
+          in the images folder. Your new image background will then be displayed.
+
+            html, body {
+	        height: 100%;
+	        overflow: auto; /* TIP: set it to 'auto' if you have long content pages */
+            overflow-y: hidden;
+            background: url('../image/dark_dotted.png') repeat #222; /* The background image that is shown behind the website when dialog is shown. */
+            }
+
+       
+    -->
+<!-- rakhi code starts here -->
+    <file name="admin/view/template/setting/setting.tpl"> 
+        <operation error="skip">
+                <search position="replace" offset="11" ><![CDATA[ 
+                 <td><?php echo $entry_maintenance; ?></td>
+                 ]]></search>
+                <add><![CDATA[]]></add>
+        </operation>
+        
+        <operation error="skip">    
+                <search position="replace"><![CDATA[<div id="tabs" class="htabs"><a href="#tab-general"><?php echo $tab_general; ?></a><a href="#tab-store"><?php echo $tab_store; ?></a><a href="#tab-local"><?php echo $tab_local; ?></a><a href="#tab-option"><?php echo $tab_option; ?></a><a href="#tab-image"><?php echo $tab_image; ?></a><a href="#tab-mail"><?php echo $tab_mail; ?></a><a href="#tab-fraud"><?php echo $tab_fraud; ?></a><a href="#tab-server"><?php echo $tab_server; ?></a></div>]]></search>
+                <add><![CDATA[<div id="tabs" class="htabs"><a href="#tab-general"><?php echo $tab_general; ?></a><a href="#tab-store"><?php echo $tab_store; ?></a><a href="#tab-local"><?php echo $tab_local; ?></a><a href="#tab-option"><?php echo $tab_option; ?></a><a href="#tab-image"><?php echo $tab_image; ?></a><a href="#tab-mail"><?php echo $tab_mail; ?></a><a href="#tab-fraud"><?php echo $tab_fraud; ?></a><a href="#tab-server"><?php echo $tab_server; ?></a><a href="#tab-maintenance">Maintenance</a></div>]]></add>                
+        </operation>
+
+        <operation error="skip">
+                <search position="after" offset="4" ><![CDATA[ 
+                 <td><?php echo $entry_google_analytics; ?></td>
+                 ]]></search>
+                <add><![CDATA[       
+                <div id="tab-maintenance">
+                 <table class="form">
+                   <tr>
+                    <td>++++</td>
+                   </tr> 
+                  </table>
+                </div>
+              ]]></add>
+        </operation>        
+      
+      
+    </file>
+    <file name="catalog/controller/common/maintenance.php">
+             <operation error="skip">
+                        <search position="after"><![CDATA[$this->children = array(]]></search>
+                        <add trim="true"><![CDATA[			
+                        'common/column_left',
+			'common/column_right',
+			'common/content_top',
+			'common/content_bottom',]]></add>
+              </operation>         
+     </file>   
+<!-- rakhi code ends here -->     
+</modification>

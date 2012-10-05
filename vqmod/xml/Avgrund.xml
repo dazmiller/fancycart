@@ -1,0 +1,245 @@
+<modification>
+  <id>Avgrund Jquery Plugin Integration for Maintenence Modal Message with transitions</id>
+  <version>1.0</version>
+  <vqmver>1.0.8</vqmver>
+  <author>One Step Solutions Pty Ltd. Based upon the Jquery Plugin created by voronianski http://labs.voronianski.com/jquery.avgrund.js</author>
+ 
+    <file name="catalog/view/theme/default/template/common/maintenance.tpl">
+		<operation error="skip">
+			<search position="replace"><![CDATA[<?php echo $message; ?>]]></search>
+			<add><![CDATA[
+                <?php echo $column_left; ?>
+                <?php echo $column_right; ?>
+                <div id="content">
+                    <?php echo $content_top; ?>
+                <h1 style="display: none;">
+                    <?php echo $heading_title; ?>
+                </h1>
+                <?php echo $content_bottom; ?>
+                </div>
+                <!-- 
+                Links to required files.
+                                  
+                     avgrund.css contains styles for the dialog, style.css contains some basic styles for the page, and of course the jquery.avgrund.js contains the javascript code.
+                     There have been some slight modifications made to the code in the plugin to ensure that the dialog cannot be closed. 
+                     Line 57 in the js file has been commented to ensure that the dialog will not close on keypress.
+               
+                 -->
+                <link rel="stylesheet" href="catalog/view/javascript/jquery/avgrund/style/avgrund.css"> 
+                <link rel="stylesheet" href="catalog/view/javascript/jquery/avgrund/style/style.css">
+                <script type="text/javascript" src="catalog/view/javascript/jquery/avgrund/js/jquery.avgrund.js"></script>
+                <script>
+              $(document).ready(function() {
+                     $('body').avgrund({            // link to the body tag
+			            height: <?php echo $maintenance_dialog_height;?>,                // height of the dialog
+                        width:<?php echo $maintenance_dialog_width;?>,                  // width of the dialog
+			            holderClass: 'custom',      // Custom styles for popin & close button, defined in style.css
+			            showClose: false,           // whether to show a close button.
+	                    showCloseText: '',          // the text of the close button
+	                    closeByEscape: false,       // do we allow the dialog to be closed by pressing the ESC key. Note this has been removed from the code. See comment above
+	                    closeByDocument: false,     // do we allow a click on the document to close this dialog
+			            enableStackAnimation: true, // do we allow a stack animation to play
+			            template: '<?php echo str_replace("\r","\n",$maintenance_message); ?>' // the HTML that will be shown as the dialog content
+
+		                });
+                     $('body').click();             // mimic a click on the body, so the dialog will show.
+                    });
+                </script>
+                ]]></add>
+		</operation>
+	</file>
+
+
+
+     <!-- 
+          CSS modifications.
+        
+          The background that is displayed when the modal is shown is defined in the following class at the top of the avgrund.css file.
+          The background URL property below defines the image that will be rendered. You can replace this by simply overwriting the dark_dotted.png file 
+          in the images folder. Your new image background will then be displayed.
+
+            html, body {
+	        height: 100%;
+	        overflow: auto; /* TIP: set it to 'auto' if you have long content pages */
+            overflow-y: hidden;
+            background: url('../image/dark_dotted.png') repeat #222; /* The background image that is shown behind the website when dialog is shown. */
+            }
+
+       
+    -->
+	
+	 <file name="catalog/view/javascript/jquery/avgrund/style/avgrund.css">
+		<operation error="skip">
+			<search position="replace"><![CDATA[background: url('../image/dark_dotted.png') repeat #222;]]></search>
+			<add><![CDATA[background: url('<?php echo $config_maintenance_dialog_page_background;?>') repeat #222;]]></add>
+		</operation>
+	</file>
+
+
+	
+<!-- rakhi code starts here -->
+    <file name="admin/controller/setting/setting.php">
+	        <operation error="skip">
+                        <search position="after"><![CDATA[$this->load->model('tool/image');]]></search>
+                        <add trim="true"><![CDATA[if ($this->config->get('config_maintenance_dialog_page_background') && file_exists(DIR_IMAGE . $this->config->get('config_maintenance_dialog_page_background')) && is_file(DIR_IMAGE . $this->config->get('config_maintenance_dialog_page_background'))) {
+								$this->data['config_maintenance_dialog_page_background'] = $this->model_tool_image->resize($this->config->get('config_maintenance_dialog_page_background'), 100, 100);		
+							} else {
+								$this->data['config_maintenance_dialog_page_background'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
+							}]]></add>
+              </operation>   
+             <operation error="skip">
+                        <search position="before"><![CDATA[if (isset($this->request->post['config_layout_id'])) {]]></search>
+                        <add trim="true"><![CDATA[	
+						
+						    $this->load->language('setting/avgrund');
+							
+							$this->data['text_dialog_width'] = $this->language->get('text_dialog_width');
+							$this->data['text_dialog_height'] = $this->language->get('text_dialog_height');
+							$this->data['text_dialog_message'] = $this->language->get('text_dialog_message');
+							$this->data['dialog_page_background'] = $this->language->get('dialog_page_background');
+				
+							
+							
+                            if (isset($this->request->post['config_maintenance_message'])) {
+                               $this->data['config_maintenance_message'] = $this->request->post['config_maintenance_message'];
+                            } else {
+                               $this->data['config_maintenance_message'] = $this->config->get('config_maintenance_message');
+                            }     
+
+							if (isset($this->request->post['config_maintenance_dialog_height'])) {
+                               $this->data['config_maintenance_dialog_height'] = $this->request->post['config_maintenance_dialog_height'];
+                            } else {
+                               $this->data['config_maintenance_dialog_height'] = $this->config->get('config_maintenance_dialog_height');
+                            }     
+
+							if (isset($this->request->post['config_maintenance_dialog_width'])) {
+                               $this->data['config_maintenance_dialog_width'] = $this->request->post['config_maintenance_dialog_width'];
+                            } else {
+                               $this->data['config_maintenance_dialog_width'] = $this->config->get('config_maintenance_dialog_width');
+                            }     
+
+							
+                ]]></add>
+              </operation>         
+    </file>   
+
+    <file name="admin/view/template/setting/setting.tpl"> 
+        <operation error="skip">
+                <search position="replace" offset="11" ><![CDATA[ 
+                 <td><?php echo $entry_maintenance; ?></td>
+                 ]]></search>
+                <add><![CDATA[]]></add>
+        </operation>
+        
+        <operation error="skip">    
+                <search position="replace"><![CDATA[<div id="tabs" class="htabs"><a href="#tab-general"><?php echo $tab_general; ?></a><a href="#tab-store"><?php echo $tab_store; ?></a><a href="#tab-local"><?php echo $tab_local; ?></a><a href="#tab-option"><?php echo $tab_option; ?></a><a href="#tab-image"><?php echo $tab_image; ?></a><a href="#tab-mail"><?php echo $tab_mail; ?></a><a href="#tab-fraud"><?php echo $tab_fraud; ?></a><a href="#tab-server"><?php echo $tab_server; ?></a></div>]]></search>
+                <add><![CDATA[<div id="tabs" class="htabs"><a href="#tab-general"><?php echo $tab_general; ?></a><a href="#tab-store"><?php echo $tab_store; ?></a><a href="#tab-local"><?php echo $tab_local; ?></a><a href="#tab-option"><?php echo $tab_option; ?></a><a href="#tab-image"><?php echo $tab_image; ?></a><a href="#tab-mail"><?php echo $tab_mail; ?></a><a href="#tab-fraud"><?php echo $tab_fraud; ?></a><a href="#tab-server"><?php echo $tab_server; ?></a><a href="#tab-maintenance">Maintenance</a></div>]]></add>                
+        </operation>
+
+        <operation error="skip">
+                <search position="after" offset="4" ><![CDATA[ 
+                 <td><?php echo $entry_google_analytics; ?></td>
+                 ]]></search>
+                <add><![CDATA[       
+                <div id="tab-maintenance">
+                 <table class="form">
+                    <tr>
+                    <td><?php echo $entry_maintenance; ?></td>
+                    <td><?php if ($config_maintenance) { ?>
+                        <input type="radio" name="config_maintenance" value="1" checked="checked" />
+                        <?php echo $text_yes; ?>
+                        <input type="radio" name="config_maintenance" value="0" />
+                        <?php echo $text_no; ?>
+                        <?php } else { ?>
+                        <input type="radio" name="config_maintenance" value="1" />
+                        <?php echo $text_yes; ?>
+                        <input type="radio" name="config_maintenance" value="0" checked="checked" />
+                        <?php echo $text_no; ?>
+                        <?php } ?></td>
+                    </tr>
+					<tr>
+                        <td><?php echo $text_dialog_width;?></td>
+                        <td><input type="text" size="5" name="config_maintenance_dialog_width" value="<?php echo $config_maintenance_dialog_width; ?>"/></td>
+                    </tr>  
+					<tr>
+                        <td><?php echo $text_dialog_height; ?></td>
+                        <td><input type="text" size="5" name="config_maintenance_dialog_height" value="<?php echo $config_maintenance_dialog_height; ?>"/></td>
+                    </tr>  
+					<tr>
+                        <td><?php echo $dialog_page_background; ?></td>
+                       <td><div class="image">
+					   <img src="<?php echo $config_maintenance_dialog_page_background; ?>" alt="" id="background-logo" />
+                       <input type="hidden" name="config_maintenance_dialog_page_background" value="<?php echo $config_maintenance_dialog_page_background; ?>" id="config_maintenance_dialog_page_background" />
+                  <br />
+                  <a onclick="image_upload('config_maintenance_dialog_page_background', 'background-logo');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#background-logo').attr('src', '<?php echo $no_image; ?>'); $('#config_maintenance_dialog_page_background').attr('value', '');"><?php echo $text_clear; ?></a></div></td>
+                    </tr>  
+					
+					
+					
+					
+					
+					
+                    <tr>
+                        <td><?php echo $text_dialog_message; ?></td>
+                        <td><textarea name="config_maintenance_message" id="config_maintenance_message" cols="40" rows="5"><?php echo $config_maintenance_message; ?></textarea></td>
+                    </tr>                    
+                  </table>
+                </div>
+                
+                <script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script> 
+                <script type="text/javascript"><!--
+                CKEDITOR.replace('config_maintenance_message', {
+                        filebrowserBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
+                        filebrowserImageBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
+                        filebrowserFlashBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
+                        filebrowserUploadUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
+                        filebrowserImageUploadUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
+                        filebrowserFlashUploadUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>'
+                });
+                //--></script> 
+                
+              ]]></add>
+        </operation>
+    </file>
+    <file name="catalog/controller/common/maintenance.php">  
+              <operation error="skip">
+                        <search position="after"><![CDATA[$this->load->language('common/maintenance');]]></search>
+                        <add><![CDATA[
+                            if($this->config->get('config_maintenance_message')) {
+								$v=html_entity_decode($this->config->get('config_maintenance_message'), ENT_QUOTES, 'UTF-8');
+								$v = str_replace(array("\r", "\n"), '', $v);  
+                                $this->data['maintenance_message'] =$v;
+                            } else {
+                                $this->data['maintenance_message'] = "";
+                            }
+
+
+							if($this->config->get('config_maintenance_dialog_width')) {  
+                                $this->data['maintenance_dialog_width'] =$this->config->get('config_maintenance_dialog_width');
+                            } else {
+                                $this->data['maintenance_dialog_width'] = 500;
+                            }
+
+							if($this->config->get('config_maintenance_dialog_height')) {  
+                                $this->data['maintenance_dialog_height'] =$this->config->get('config_maintenance_dialog_height');
+                            } else {
+                                $this->data['maintenance_dialog_height'] = 200;
+                            }
+							
+
+
+							
+                        ]]></add>
+              </operation> 
+              
+             <operation error="skip">
+                        <search position="after"><![CDATA[$this->children = array(]]></search>
+                        <add trim="true"><![CDATA[			
+                        'common/column_left',
+			'common/column_right',
+			'common/content_top',
+			'common/content_bottom',]]></add>
+              </operation>         
+     </file>   
+<!-- rakhi code ends here -->     
+</modification>
